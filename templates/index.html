@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Offline GIF Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="toggle">
+    <button onclick="toggleTheme()">🌙 / ☀️</button>
+</div>
+
+<div class="container">
+    <div class="header">
+        <h1>Offline GIF Generator</h1>
+        <p>Create professional animated GIFs (offline)</p>
+    </div>
+
+    <form method="POST" class="form-box" onsubmit="showLoader()">
+        <input type="text" name="prompt" placeholder="Enter text (emoji supported 🎉😢)" required>
+        <button type="submit">Generate GIFs</button>
+    </form>
+
+    <div id="loader" class="loader">Generating GIFs…</div>
+
+    {% if gifs %}
+    <div class="results">
+        {% for gif in gifs %}
+        <div class="card">
+            <h4>{{ gif.name }}</h4>
+            <img src="{{ gif.path }}">
+            <a href="{{ gif.path }}" download>Download</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function showLoader() {
+    document.getElementById("loader").style.display = "block";
+}
+function toggleTheme() {
+    document.body.classList.toggle("light");
+}
+</script>
+
+</body>
+</html>
